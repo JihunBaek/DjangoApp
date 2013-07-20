@@ -1,0 +1,29 @@
+{% include 'layout/header.html' %}
+<h1>
+	<strong>{{page_title}}</strong>
+</h1>
+<div>
+	<h3>
+		<a href="/app/entry/{{current_entry.id}}">{{current_entry.Title}}</a>
+	</h3>
+	<ul>
+		<li>{{current_entry.Category.Title}}</li>
+		<li>{% for tag in current_entry.Tags.all %} <span>{{tag.Title}}</span>
+			{% endfor %}
+		</li>
+		<li>{{current_entry.created}}</li>
+		<li>{{current_entry.Comments}}</li>
+	</ul>
+	<div>{{current_entry.Content}}</div>
+</div>
+<div id="comment_box_{{current_entry.id}}" style="display: block;">
+{% include 'comments.html' %}
+</div>
+<ul>
+	{% if prev_entry %}
+	<li><a href="/app/entry/{{prev_entry.id}}">이전 글
+			({{prev_entry.Title}})</a></li> {% endif %} {% if next_entry %}
+	<li><a href="/app/entry/{{next_entry.id}}">다음 글
+			({{next_entry.Title}})</a></li> {% endif %}
+</ul>
+{% include 'layout/footer.html' %}

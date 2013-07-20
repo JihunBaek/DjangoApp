@@ -1,0 +1,42 @@
+{% include 'layout/header.html' %}
+
+<h1>{{page_title}}</h1>
+<div id="nav">
+	<a href="/app">home</a>
+	{% if user.is_authenticated %}
+		<p>{{ user.username }}님 접속.블로그 같은 겁니다!(<a href="logout">로그아웃</a>)</p>
+		
+	{% else %}
+		<p>로그인 페이지에서  <a href="login">login</a> 하세요.</p>
+	{% endif %}
+</div>
+
+<div id="content">
+	{% for entry in entries %}
+
+	<div class="post_entry">
+		<h3 id="post_{{entry.id}}" class="post_title"><a href="/app/entry/{{entry.id}}">{{entry.Title}}</a></h3>
+
+		<p class="post_info">글 갈래 : [ {{entry.Category.Title}} ] / <a href="/app/entry/{{entry.id}}">{{entry.created}}</a></p>
+
+		<div class="content_box">{{entry.Content}}</div>
+
+		<ul class="post_meta">
+			<li>꼬리표 : {% for tag in entry.Tags.all %}
+			<span>{{tag.Title}}</span>
+			{% endfor %}</li>
+			<li><a href="/app/get_comments/{{entry.id}}/">댓글 ({{entry.Comments}})</a></li>
+			
+			<li><a href="/app/get_comments/{{entry.id}}/" onclick="toggle_comment_box(this.href, '{{entry.id}}'); return false;">댓글 ({{entry.Comments}})</a></li>
+		<div id="comment_box_{{entry.id}}" style="display: none;"></div>
+	</div>
+
+	{% endfor %}
+</div>
+
+
+
+<div id="sidebar"></div>
+
+
+{% include 'layout/footer.html' %}
