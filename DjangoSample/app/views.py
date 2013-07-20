@@ -208,6 +208,9 @@ def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/app')
 
+def test(request):
+    print request.method
+    
 def register_page(request):
     print request.method
     if request.method == 'POST':
