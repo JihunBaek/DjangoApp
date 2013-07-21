@@ -12,6 +12,8 @@
 		</form>
 	</li> {% endfor %}
 </ul>
-{% else %} 댓글이 없습니다. {% endif %}
+{% else %} 
+	<li>댓글이 없습니다.</li> 
+{% endif %}
 {% include 'comment_form.html' %}
 {% if with_layout %}{% include 'layout/footer.html' %}{% endif %}

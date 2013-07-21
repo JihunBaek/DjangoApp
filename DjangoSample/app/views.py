@@ -30,7 +30,7 @@ def index(request, page=1):
         npagination =+ 1
         
     entries = Entries.objects.all().order_by('-created')[start_pos:end_pos]
-    tpl = loader.get_template('list.html')
+
     ctx = Context({
                    'page_title':page_title,
                    'entries':entries,
@@ -43,7 +43,7 @@ def index(request, page=1):
     return render_to_response('list.html', ctx)
 
 def read(request, entry_id=None):
-    page_title = '블로그 글 읽기 화면'
+    page_title = '읽기 화면'
     try:
         current_entry = Entries.objects.get(id=int(entry_id))
     except:
@@ -59,13 +59,15 @@ def read(request, entry_id=None):
         next_entry = None
     
     comments = Comments.objects.filter(Entry=current_entry).order_by('created') #필터는 0개이상
+    files = Files.objects.filter(Entry=current_entry).order_by('Name')
     tpl = loader.get_template('read.html')
     ctx = Context({
                    'page_title':page_title,
                    'current_entry':current_entry,
                    'prev_entry':prev_entry,
                    'next_entry':next_entry,
-                   'comments':comments
+                   'comments':comments,
+                   'files':files
                    })
     ctx.update(csrf(request))
     #return render_to_response('read.html', ctx)
@@ -188,14 +190,12 @@ def delete_comment_check(request):
 
 @csrf_exempt
 def get_comments(request, entry_id=None):
-    print request.method
     if request.is_ajax():        
         with_layout = False
     else:        
         with_layout = True    
     current_entry = Entries.objects.get(id=entry_id)
     comments = Comments.objects.filter(Entry=entry_id).order_by('created')
-    tpl = loader.get_template('comments.html')
     ctx = Context({
                    'current_entry':current_entry,
                    'comments':comments
@@ -239,15 +239,36 @@ def register_page(request):
     ctx.update(csrf(request))
     return render_to_response('registration/register.html',ctx)
 
+def get_files(request, entry_id=None):
+    if request.is_ajax():
+        with_layout = False
+    else:
+        with_layout = True
+    current_entry = Entries.objects.get(id=entry_id)
+    files = Files.objects.filter(Entry=entry_id).order_by('Name')
+    ctx = Context({
+                   'current_entry':current_entry,
+                   'files':files,
+                   })
+    ctx.update(csrf(request))                  
+    return render_to_response('files.html', ctx)
+
+
 @csrf_exempt
-def uploadfile(request):
-    print request.method
+def upload_file(request, entry_id=None):
     if request.method == 'POST':
-        print request.method
         form = UploadFileForm(request.POST, request.FILES)
+        try:
+            entry = Entries.objects.get(id=entry_id)
+        except:
+            return HttpResponse('없는 글')
+ 
         if form.is_valid():
-            print request.method
-            handle_uploaded_file(request.FILES['file'])
+            new_file = Files(File=request.FILES['file'], Entry=entry, Name=request.POST['title'])
+            new_file.save()
+            entry.Files += 1
+            entry.save()
+    #        handle_uploaded_file(request.FILES['file'])
             return HttpResponseRedirect('/app')
     else:
         form = UploadFileForm()
@@ -267,4 +288,19 @@ def handle_uploaded_file(f):
             destination.write(chunk)
         destination.close()
  
+
+def delete_file(request):
+    file_entry = Entries.objects.get(id=request.POST['entry_id'])
+    print file_entry.id
+    print request.method
+    try:
+        del_file = Files.objects.get(Entry = file_entry, Name = request.POST['file_name'], File = request.POST['file_content'])
+    except:
+        return HttpResponse('없는 파일입니다')
+    
+    del_file.delete()
+    file_entry.Files -= 1
+    file_entry.save()
+    return HttpResponseRedirect('/app')
+
 

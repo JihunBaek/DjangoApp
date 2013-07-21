@@ -16,6 +16,7 @@ class Entries(models.Model):
     Category = models.ForeignKey(Categories)
     Tags = models.ManyToManyField(TagModel)
     Comments = models.PositiveSmallIntegerField(default=0, null=True)
+    Files = models.PositiveSmallIntegerField(default=0, null=True)
     
 class Comments(models.Model):
     Name = models.CharField(max_length=20, null=False)
@@ -28,3 +29,4 @@ class Comments(models.Model):
 class Files(models.Model):
     Name = models.CharField(max_length=20, null=False)
     File = models.FileField(upload_to='files')
+    Entry = models.ForeignKey(Entries)

@@ -8,6 +8,7 @@ encoding//DjangoSample/templates/comment_form.html=UTF-8
 encoding//DjangoSample/templates/comments.html=UTF-8
 encoding//DjangoSample/templates/delete_comment_form.html=UTF-8
 encoding//DjangoSample/templates/file_upload.html=UTF-8
+encoding//DjangoSample/templates/files.html=UTF-8
 encoding//DjangoSample/templates/layout/footer.html=UTF-8
 encoding//DjangoSample/templates/layout/header.html=UTF-8
 encoding//DjangoSample/templates/list.html=UTF-8

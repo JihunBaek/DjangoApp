@@ -7,7 +7,7 @@ from django.contrib import admin
 from app.models import *
 
 class AdminApp(admin.ModelAdmin):
-    list_display = ('id', 'created', 'Title', 'Content')
+    list_display = ('id', 'created', 'Title', 'Content', 'Files')
 class AdminTitle(admin.ModelAdmin):
     list_display = ('Title',)    
 class AdminComment(admin.ModelAdmin):

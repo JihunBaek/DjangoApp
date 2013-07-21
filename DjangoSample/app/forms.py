@@ -40,5 +40,5 @@ class RegistrationForm(forms.Form):
         raise forms.ValidationError('중복된 사용자 이름입니다.')
 
 class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
+    title = forms.CharField(max_length=20)
     file  = forms.FileField()
