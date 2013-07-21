@@ -1,11 +1,13 @@
 eclipse.preferences.version=1
 encoding//DjangoSample/media/js/comment_view.js=UTF-8
+encoding//DjangoSample/media/js/file_upload.js=UTF-8
 encoding//DjangoSample/media/js/jquery.js=UTF-8
 encoding//DjangoSample/media/js/top.js=UTF-8
 encoding//DjangoSample/media/style.css=UTF-8
 encoding//DjangoSample/templates/comment_form.html=UTF-8
 encoding//DjangoSample/templates/comments.html=UTF-8
 encoding//DjangoSample/templates/delete_comment_form.html=UTF-8
+encoding//DjangoSample/templates/file_upload.html=UTF-8
 encoding//DjangoSample/templates/layout/footer.html=UTF-8
 encoding//DjangoSample/templates/layout/header.html=UTF-8
 encoding//DjangoSample/templates/list.html=UTF-8

@@ -25,3 +25,6 @@ class Comments(models.Model):
     updated = models.DateTimeField(auto_now=True)
     Entry = models.ForeignKey(Entries)
     
+class Files(models.Model):
+    Name = models.CharField(max_length=20, null=False)
+    File = models.FileField(upload_to='files')

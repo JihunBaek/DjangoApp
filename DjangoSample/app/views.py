@@ -1,6 +1,6 @@
 # Create your views here.
 # -*- coding: utf-8 -*-
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
 from django.template import RequestContext, Context, loader
 from django.core.context_processors import csrf
@@ -12,6 +12,8 @@ import md5
 
 from app.models import *
 from app.forms import *
+from DjangoSample import settings
+import os
 
 def index(request, page=1):
     per_page = 5
@@ -236,4 +238,33 @@ def register_page(request):
                    })
     ctx.update(csrf(request))
     return render_to_response('registration/register.html',ctx)
+
+@csrf_exempt
+def uploadfile(request):
+    print request.method
+    if request.method == 'POST':
+        print request.method
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            print request.method
+            handle_uploaded_file(request.FILES['file'])
+            return HttpResponseRedirect('/app')
+    else:
+        form = UploadFileForm()
+    return render_to_response('file_upload.html', {'form': form})
+ 
+def handle_uploaded_file(f):
+    path = settings.MEDIA_ROOT + '/data/'
+    print f.name
+    if not os.path.exists(path):
+        print f
+        os.makedirs(path)
+        fn = path + f.name
+    else:
+        fn = path + f.name
+    with open(fn, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+        destination.close()
+ 
 

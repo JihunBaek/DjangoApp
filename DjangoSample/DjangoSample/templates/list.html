@@ -26,11 +26,11 @@
 			<span>{{tag.Title}}</span>
 			{% endfor %}</li>
 			<li><a href="/app/get_comments/{{entry.id}}/">댓글 ({{entry.Comments}})</a></li>
-			
-			<li><a href="/app/get_comments/{{entry.id}}/" onclick="toggle_comment_box(this.href, '{{entry.id}}'); return false;">댓글 ({{entry.Comments}})</a></li>
+			<li><a href="/app/uploadfile/">파일 올리기</a></li>			
+			<li><a href="/app/get_comments/{{entry.id}}/" onclick="toggle_comment_box(this.href, '{{entry.id}}'); return false;">ajax댓글 ({{entry.Comments}})</a></li>
 		<div id="comment_box_{{entry.id}}" style="display: none;"></div>
+			<li><a id="view_comment">댓글</a></li>
 	</div>
-
 	{% endfor %}
 </div>
 
