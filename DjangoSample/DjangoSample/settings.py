@@ -3,7 +3,7 @@ import  os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -13,7 +13,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'C:\\Users\\lacidjun\\workspace\\DjangoSample\\sqlite.db',                      # Or path to database file if using sqlite3.
+        'NAME': 'C:\Users\lacidjun\git\DjangoAppGit\DjangoSample\sqlite.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -51,12 +51,12 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = 'C:/Users/lacidjun/workspace/DjangoSample/DjangoSample/media/'
+MEDIA_ROOT = PROJECT_PATH + "/DjangoSample/media/"
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = 'http://127.0.0.1:8000/media/'
+MEDIA_URL = "http://127.0.0.1:8000/media/"
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -109,7 +109,7 @@ ROOT_URLCONF = 'DjangoSample.urls'
 WSGI_APPLICATION = 'DjangoSample.wsgi.application'
 
 TEMPLATE_DIRS = (
-    "C:/Users/lacidjun/workspace/DjangoSample/DjangoSample/templates",
+    PROJECT_PATH + "/DjangoSample/templates",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
