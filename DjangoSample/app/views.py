@@ -188,7 +188,7 @@ def delete_comment_check(request):
     comment_entry.save()
     return HttpResponse('삭제 성공')
 
-@csrf_exempt
+
 def get_comments(request, entry_id=None):
     if request.is_ajax():        
         with_layout = False
@@ -301,6 +301,7 @@ def delete_file(request):
     del_file.delete()
     file_entry.Files -= 1
     file_entry.save()
+    
     return HttpResponseRedirect('/app')
 
 

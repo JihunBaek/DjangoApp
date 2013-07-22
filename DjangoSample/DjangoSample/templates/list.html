@@ -2,12 +2,15 @@
 
 <h1>{{page_title}}</h1>
 <div id="nav">
-	<a href="/app">home</a>
-	{% if user.is_authenticated %}
-		<p>{{ user.username }}님 접속.블로그 같은 겁니다!(<a href="logout">로그아웃</a>)</p>
-		
+	<a href="/app">home</a> {% if user.is_authenticated %}
+	<p>
+		{{ user.username }}님 접속.블로그 같은 겁니다!(<a href="logout">로그아웃</a>)
+	</p>
+
 	{% else %}
-		<p>로그인 페이지에서  <a href="login">login</a> 하세요.</p>
+	<p>
+		로그인 페이지에서 <a href="login">login</a> 하세요.
+	</p>
 	{% endif %}
 </div>
 
@@ -15,24 +18,32 @@
 	{% for entry in entries %}
 
 	<div class="post_entry">
-		<h3 id="post_{{entry.id}}" class="post_title"><a href="/app/entry/{{entry.id}}">{{entry.Title}}</a></h3>
+		<h3 id="post_{{entry.id}}" class="post_title">
+			<a href="/app/entry/{{entry.id}}">{{entry.Title}}</a>
+		</h3>
 
-		<p class="post_info">글 갈래 : [ {{entry.Category.Title}} ] / <a href="/app/entry/{{entry.id}}">{{entry.created}}</a></p>
+		<p class="post_info">
+			글 갈래 : [ {{entry.Category.Title}} ] / <a
+				href="/app/entry/{{entry.id}}">{{entry.created}}</a>
+		</p>
 
 		<div class="content_box">{{entry.Content}}</div>
 
 		<ul class="post_meta">
-			<li>꼬리표 : {% for tag in entry.Tags.all %}
-			<span>{{tag.Title}}</span>
-			{% endfor %}</li>
-			<li>파일 : {% for file in entry.Files.all %}
-			<span>{{file.Name}}</span>
-			{% endfor %}</li>
-			<li><a href="/app/get_comments/{{entry.id}}/">댓글 ({{entry.Comments}})</a></li>
-			<li><a href="/app/get_files/{{entry.id}}">파일({{entry.Files}})</a></li>			
-			<li><a href="/app/get_comments/{{entry.id}}/" onclick="toggle_comment_box(this.href, '{{entry.id}}'); return false;">ajax댓글 ({{entry.Comments}})</a></li>
-		<div id="comment_box_{{entry.id}}" style="display: none;"></div>
+			<li>꼬리표 : {% for tag in entry.Tags.all %} <span>{{tag.Title}}</span>
+				{% endfor %}
+			</li>
+			<li>파일 : {% for file in entry.Files.all %} <span>{{file.Name}}</span>
+				{% endfor %}
+			</li>
+			<li><a href="/app/get_comments/{{entry.id}}/">댓글
+					({{entry.Comments}})</a></li>
+			<li><a href="/app/get_files/{{entry.id}}">파일({{entry.Files}})</a></li>
+			<li><a href="/app/get_comments/{{entry.id}}/"
+				id="comment_button_{{entry.id}}" onclick="toggle_comment_box(this.href, '{{entry.id}}'); return false;">ajax댓글({{entry.Comments}})</a></li>
+				{% csrf_token %}
 	</div>
+	<div id="comment_box_{{entry.id}}" style="display: none;"></div>
 	{% endfor %}
 </div>
 

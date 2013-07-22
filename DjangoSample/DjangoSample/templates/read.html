@@ -2,24 +2,29 @@
 <h1>
 	<strong>{{page_title}}</strong>
 </h1>
-<div class = "post_entry">
-	<h3>
-		<a href="/app/entry/{{current_entry.id}}">{{current_entry.Title}}</a>
-	</h3>
-	<ul>
-		<li>{{current_entry.Category.Title}}</li>
-		<li>{% for tag in current_entry.Tags.all %} <span>{{tag.Title}}</span>
-			{% endfor %}
-		</li>
-		<li>{{current_entry.created}}</li>
-		<li>{{current_entry.Comments}}</li>
-	</ul>
-	<div>{{current_entry.Content}}</div>
+<div id="content">
+	<div class="post_entry">
+		<h3 id="post_{{current_entry.id}}" class="post_title">
+			<a href="/app/entry/{{current_entry.id}}">{{current_entry.Title}}</a>
+		</h3>
+		<p class="post_info">
+			글 갈래 : [ {{current_entry.Category.Title}} ] / 
+			<a href="/app/entry/{{current_entry.id}}"> {{current_entry.created}}</a>
+		</p>
+		<ul class="post_meta">
+			<li>꼬리표 : {% for tag in current_entry.Tags.all %} <span>{{tag.Title}}</span>
+				{% endfor %}
+			</li>
+			<li>파일 : {% for file in current_entry.Files.all %} <span>{{file.Name}}</span>
+				{% endfor %}
+			</li>
+			<li>{{current_entry.Comments}}</li>
+		</ul>
+		<div class="content_box">{{current_entry.Content}}</div>
+	</div>
 </div>
 <div id="comment_box_{{current_entry.id}}" style="display: block;">
-{% include 'comments.html' %}
-{% include 'files.html' %}
-</div>
+	{% include 'comments.html' %} {% include 'files.html' %}</div>
 <ul>
 	{% if prev_entry %}
 	<li><a href="/app/entry/{{prev_entry.id}}">이전 글
